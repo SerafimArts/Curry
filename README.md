@@ -1,6 +1,17 @@
 # Curry
 
-Convenient implementation of function currying and partial application
+Convenient implementation of function 
+currying and partial application.
+
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Left currying](#left-currying)
+    - [Right currying](#right-currying)
+    - [Partial application](#partial-application)
+- [Api](#api)
+    - [Functions](#functions)
+    - [Methods of the curried function](#curried)
+    
 
 ## Installation
 
@@ -75,7 +86,6 @@ $result = $multiply(3);   // 3 + 2 * 2 = 7
 echo $result; // 7
 ```
 
-### Partial application + currying
 
 ```php
 $fn = \curry(function($a, $b, $c) { return $a + $b * $c; });
@@ -97,18 +107,8 @@ $test->rcurry(6); // ? + 2 * 6 = function($a) $a + 2 * 6
 - `lcurry(callable $fn, ...$args): Curried` or `curry`
 > Left currying (like array_push arguments)
 
-```php
-\curry('\\var_dump', 1, 2)(3, 4)(); // \var_dump(1, 2, 3, 4);
-```
-
 - `rcurry(callable $fn, ...$args): Curried` 
 > Right currying
-
-```php
-\rcurry('\\var_dump', 1, 2)(3, 4)(); // \var_dump(3, 4, 1, 2);
-
-\rcurry('\\var_dump', 1, 2)->rcurry(3, 4)(); // \var_dump(1, 2, 3, 4);
-```
 
 - `uncurry(callable $fn): mixed`
 > Returns result or partially applied function
