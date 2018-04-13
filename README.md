@@ -19,7 +19,7 @@ To install the package, use [Composer](https://getcomposer.org/doc/)
 (Or [The Force](https://www.youtube.com/watch?v=o2we_B6hDrY) for the Jedi Developers).
 
 ```bash
-composer require serafim/interval
+composer require serafim/curry
 ```
 
 ## Usage
