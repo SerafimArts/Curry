@@ -29,18 +29,9 @@ composer require serafim/interval
 The left currying can be perceived as adding arguments to an array. 
 And then applying this array of arguments to the function.
 
-```php
-$arguments = [1, 2, 3, 4];
-\array_push($arguments, 5)
-test(...$a);
 
-// Currying
-$fn = \curry('test', 1, 2, 3, 4);
-$fn = $fn(5);
-$fn(); 
-```
-
-The left currying returns the partially applied function from the first argument.
+The left currying returns the partially applied function 
+from the first argument.
 
 ```php
 // Curried function
