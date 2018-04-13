@@ -2,7 +2,7 @@
     "name": "serafim/curry",
     "license": "MIT",
     "type": "library",
-    "description": "A small library that implements the interval iterator function",
+    "description": "Convenient implementation of function currying and partial application",
     "keywords": ["currying", "partial application", "functional", "lambda", "closure", "sugar"],
     "support": {
         "issues": "https://github.com/SerafimArts/Curry/issues",
