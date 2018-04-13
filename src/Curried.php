@@ -139,7 +139,7 @@ final class Curried implements \Countable, Renderable, Invokable
     {
         $curried = $this->lcurry(...$args);
 
-        if ($curried->isCompleted()) {
+        if (\count($args) === 0 && $curried->isCompleted()) {
             return $curried->reduce();
         }
 
@@ -194,7 +194,6 @@ final class Curried implements \Countable, Renderable, Invokable
 
     /**
      * @return mixed
-     * @internal Alias of uncurry()
      */
     public function reduce()
     {
@@ -223,14 +222,10 @@ final class Curried implements \Countable, Renderable, Invokable
     }
 
     /**
-     * @return mixed|\Closure
+     * @return \Closure
      */
-    public function uncurry()
+    public function uncurry(): \Closure
     {
-        if ($this->isCompleted()) {
-            return $this->reduce();
-        }
-
         return function (...$args) {
             return $this->lcurry(...$args)->reduce();
         };

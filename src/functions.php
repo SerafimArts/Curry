@@ -74,7 +74,7 @@ if (! \function_exists('\\uncurry')) {
      * @param callable|Curried $fn An applicant php or curried function
      * @return int|float|bool|string|resource|object|\Closure Function result or closure
      */
-    function uncurry(callable $fn)
+    function uncurry(callable $fn): \Closure
     {
         return ($fn instanceof Curried ? $fn : Curried::new($fn))->uncurry();
     }
