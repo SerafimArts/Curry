@@ -139,7 +139,7 @@ final class Curried implements \Countable, Renderable, Invokable
     {
         $curried = $this->lcurry(...$args);
 
-        if (\count($args) === 0 && $curried->isCompleted()) {
+        if (\count($args) === 0 || $curried->isCompleted()) {
             return $curried->reduce();
         }
 

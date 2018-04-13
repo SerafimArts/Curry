@@ -34,21 +34,11 @@ The left currying returns the partially applied function
 from the first argument.
 
 ```php
-// Curried function
-$fn = \curry(function(...$args) { return \array_sum($args); });
+$fn = \curry(function($a, $b) { return $a + $b; });
 
-echo $fn(1)(2)(3)(4)(); 
-// (1) + (2) + (3) + (4) = 10
-
-echo $fn(1, 2)(3, 4)(); 
-// (1 + 2) + (3 + 4) = 10
-
-echo $fn(1, 2, 3)(4)(); 
-// (1 + 2 + 3) + (4) = 10
-
-// Hmmm.... It does not matter in what order you are applying this 
+$fn(3);      // ($a = 3) + ($b = ?)
+$fn(3)(4);   // ($a = 3) + ($b = 4)
 ```
-
 
 ### Right currying
 
@@ -56,39 +46,46 @@ At the same time, right-hand currying can be
 perceived as adding arguments to the right.
 
 ```php
-$fn = \rcurry('\\file_put_contents', 'text');
+$fn = \rcurry(function($a, $b) { return $a + $b; });
 
-$fn(__DIR__ . '/file1.txt')(); // Write "text" into file1.txt
-$fn(__DIR__ . '/file2.txt')(); // Write "text" into file1.txt
-$fn(__DIR__ . '/file2.txt')(); // Write "text" into file1.txt
+$fn(3);      // ($a = ?) + ($b = 3)
+$fn(3)(4);   // ($a = 4) + ($b = 3)
 ```
 
 ### Partial application
 
 Partial application is when you can specify completely 
-random arguments, skipping unnecessary.
+random arguments, skipping unnecessary using placeholder `_`.
 
 ```php
 $fn = \curry(function($a, $b, $c) { return $a + $b * $c; });
 
-$multiply = $fn(_, 2, 2); // ? + 2 * 2
-$result = $multiply(3);   // 3 + 2 * 2 = 7
-
-echo $result; // 7
+$fn = $fn(_, 3, 4); // ($a = ?)  + ($b = 3) * ($c = 4)
+echo  $fn(42);      // ($a = 42) + ($b = 3) * ($c = 4)
 ```
 
+```php
+$fn = \curry(function($a, $b, $c) { return $a + $b * $c; });
+
+$fn = $fn(_, 3, _); // ($a = ?)  + ($b = 3) * ($c = ?)
+$fn->lcurry(42);    // ($a = 42) + ($b = 3) * ($c = ?)
+$fn->rcurry(23);    // ($a = ?)  + ($b = 3) * ($c = 23)
+```
 
 ```php
 $fn = \curry(function($a, $b, $c) { return $a + $b * $c; });
 
-$sum  = $fn(2, 2);    // 2 + 2 * ?
-$mul  = $fn(_, 2, 2); // ? + 2 * 2
-$test = $fn(_, 2);    // ? + 2 * ?
+$sum  = $fn(7, 9);    // 7 + 9 * ?
+$sum(6);              // 7 + 9 * 6 
 
-$sum(6);          // 2 + 2 * 6 = 14
-$mul(6);          // 6 + 2 * 2 = 10
-$test(6);         // 6 + 2 * ? = function($c) 6 + 2 * $c 
-$test->rcurry(6); // ? + 2 * 6 = function($a) $a + 2 * 6
+$mul  = $fn(_, 7, 9); // ? + 7 * 9
+$mul(6);              // 6 + 7 * 9
+
+$test = $fn(_, 7, _); // ? + 7 * ?
+$test(6);             // 6 + 7 * ? 
+
+$test = $fn(_, 7);    // ? + 7 * ?
+$test->rcurry(6);     // ? + 7 * 6 
 ```
 
 ## Api
